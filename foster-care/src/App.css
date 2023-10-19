@@ -1,0 +1,226 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* For TAB 1 */
+
+.accordion-title {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  /* Other styles for .accordion-title */
+}
+
+.accordion-item.open .content {
+  margin-top: 12%;
+  display: block; /* Show the content when the item is open */
+}
+
+.container2 {
+  display: flex; /* Use flexbox for layout */
+  justify-content: center;
+  /*height: 100vh; !* 100% of the viewport height *!*/
+}
+
+.container {
+  display: flex; /* Use flexbox for layout */
+  /*height: 100vh; !* 100% of the viewport height *!*/
+}
+
+.sidebar2 {
+  flex: 20%;
+  width: 20%; /* 20% of the parent container width */
+  height: 100%;
+  background-color: #1c3c89;
+  color: white;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+.sidebar {
+  flex: 20%;
+  overflow: visible;
+  width: 250px; /* Initial width of the sidebar */
+  height: 100%;
+  background-color: #1c3c89;
+  color: white;
+  position: fixed;
+  transition: width 0.3s;
+}
+
+.maincontainer{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.iframe-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+
+.content {
+  /*align-items: center; !* Center vertically *!*/
+  /*justify-content: center; !* Center horizontally *!*/
+  /*flex: 80%;*/
+  margin-left: 10%;
+  display: none; /* Initially hide the content */
+  position: fixed;
+  top: 20%;
+  width: 80%;
+  height: 500px;
+  /*left: 17%; !* Position it to the right of the sidebar (adjust as needed) *!*/
+  /*width: 100%; !* Take up 80% of the viewport width (adjust as needed) *!*/
+  max-height: 100%;
+  overflow: visible;
+  /*background-color: white; !* Add background color or styles as needed *!*/
+  /* Other content styles */
+}
+
+.tab1-container {
+  padding: 20px;
+}
+
+.accordion-container {
+  position: fixed;
+  top: 20px; /* Adjust the top position as needed */
+  right: 20px; /* Adjust the right position as needed */
+  width: 300px; /* Adjust the width as needed */
+}
+
+
+
+.tree-container {
+  display: flex;
+  flex-direction: row; /* Arrange elements horizontally */
+}
+
+.tree {
+  flex: 1;
+}
+
+/* Your CSS stylesheet */
+.sidebar {
+  display: flex;
+}
+
+.tree {
+  flex: 1;
+}
+
+.form {
+  width: 0;
+  overflow: visible;
+  transition: width 0.3s ease;
+}
+
+.form.active {
+  width: auto;
+}
+
+
+
+
+.treeview-container {
+  margin-left: 250px; /* Adjust for the sidebar width */
+  /*transition: width 0.3s ease;*/
+}
+
+/* Style the TreeViews (customize as needed) */
+.treeview {
+  /* TreeView styles */
+}
+
+/* Styles for the collapsed sidebar */
+.collapsed {
+  width: 0;
+}
+
+.MuiTreeItem-label {
+  min-width: 0;
+  padding-left: 4px;
+  position: relative;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  /*color: black;*/
+  display: flex;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  transition: width 0.3s ease;
+
+}
+
+.MuiTreeItem-iconContainer {
+  margin-right: 4px;
+  width: 15px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  transition: width 0.3s ease;
+
+}
+
+.MuiTreeItem-root {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  outline: 0;
+  height: auto;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column; /* Change flex-direction to column */
+  max-width: 250px;
+  overflow-y: visible;
+  transition: width 0.3s ease;
+
+}

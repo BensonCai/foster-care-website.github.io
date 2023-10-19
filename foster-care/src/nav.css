@@ -1,0 +1,44 @@
+nav {
+    /*display: flex;*/
+    background-color: rgba(1, 37, 125, 0.89); /* Background color for the navbar */
+    height: 10%;
+}
+
+/*body {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    background-color: #FAF9F6;*/
+/*}*/
+
+ul {
+
+    list-style: none;
+    display: flex;
+    /*align-items: center;*/
+    justify-content: space-between; /* This evenly spaces the items */
+    padding-left: 10%;
+    padding-right: 10%;
+    height: 100px;
+}
+
+.align-items {
+    /*display: flex;*/
+    align-items: center;
+}
+
+li {
+    margin: 0;
+}
+
+/* Apply styles to all <a> tags */
+a {
+    text-decoration: none;
+    color: white; /* Text color for the links */
+    transition: text-decoration 0.5s; /* Add a 0.5s transition for text-decoration */
+}
+
+/* Apply hover styles to all <a> tags */
+a:hover {
+    text-decoration: underline;
+}
+

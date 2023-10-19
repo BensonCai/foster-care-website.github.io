@@ -1,0 +1,58 @@
+.tree-container {
+    flex: 1; /* Takes up the available horizontal space */
+    padding: 10px; /* Add padding for separation */
+}
+
+.form-container {
+    position: absolute;
+    top: 130px;
+    right: 90px;
+    width: 65%; /* Default width for larger screens */
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 25px;
+    /*box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);*/
+    /* Add more styling as needed */
+}
+
+.align {
+    text-align: left;
+}
+
+@media (max-width: 1000px) {
+    .form-container {
+        width: 60%; /* Adjust the width for screens with a maximum width of 1000px */
+    }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 850px) {
+    .form-container {
+        width: 50%; /* Adjust the width for screens with a maximum width of 768px */
+        right: 5%; /* Adjust the right positioning for smaller screens */
+    }
+}
+
+/* Media query for even smaller screens */
+@media (max-width: 600px) {
+    .form-container {
+        width: 40%; /* Adjust the width for screens with a maximum width of 600px */
+        right: 2%; /* Adjust the right positioning for even smaller screens */
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Stack labels and inputs vertically */
+}
+
+label {
+    flex: 1; /* Take up equal space for all labels */
+    margin-right: 10px; /* Add some space between label and input */
+    text-align: right; /* Align text to the right for labels */
+}
+
+input {
+    flex: 3; /* Take up more space for inputs */
+}

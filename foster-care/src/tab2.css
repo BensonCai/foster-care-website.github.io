@@ -1,0 +1,8 @@
+.Tree {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.Tree .children {
+    margin-left: 5%;
+}
