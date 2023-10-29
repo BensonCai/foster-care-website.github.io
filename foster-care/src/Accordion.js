@@ -10,14 +10,30 @@ function Accordion({ items }) {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
+    // Store the totalTime in localStorage whenever it changes
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            localStorage.setItem('totalTime', totalTime.toString());
+        }, 1);
+
+        return () => clearTimeout(timeoutId);
+
+    }, [totalTime]);
+
     useEffect(() => {
         let interval;
         if (activeIndex !== null) {
+            console.log("not null");
             interval = setInterval(() => {
                 setTotalTime((prevTotalTime) => prevTotalTime + 1);
             }, 1000);
         } else {
-            clearInterval(interval);
+            console.log("loaded");
+            const savedTotalTime = localStorage.getItem('totalTime');
+            console.log("saved time: ", savedTotalTime);
+            if (savedTotalTime) {
+                setTotalTime(parseInt(savedTotalTime));
+            }
         }
 
         return () => clearInterval(interval);
@@ -25,8 +41,8 @@ function Accordion({ items }) {
 
     return (
         <div className="accordion">
-            {/*TIMER*/}
-            {/*<div className="total-time">Total time spent: {totalTime} seconds</div>*/}
+            {/* TIMER */}
+            <div className="total-time">Total time spent: {totalTime} seconds</div>
             {items.map((item, index) => (
                 <AccordionItem
                     key={index}

@@ -5,16 +5,56 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { CustomTreeItem } from './CustomTreeItem';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import ObjectiveForm from './FormObjective';
 import InterventionForm from './FormIntervention';
 import GoalForm from './FormGoal';
-import {TreeItem} from "@mui/x-tree-view/TreeItem";
-
 
 export default function CustomTreeView() {
     const [expanded, setExpanded] = React.useState([]);
+    // const [isFirstNodeAdded, setIsFirstNodeAdded] = useState(false);
     const [selected, setSelected] = React.useState([]);
+    const [goalCounter, setGoalCounter] = React.useState(1);
+    const [objectiveCounter, setObjectiveCounter] = React.useState(1);
+    const [interventionCounter, setInterventionCounter] = React.useState(1);
+
+    const [data, setData] = React.useState({
+        id: 'root',
+        name: ' ',
+        expanded: true,
+    });
+
+    useEffect(() => {
+        const expandedNodes = JSON.parse(localStorage.getItem('expandedNodes'));
+        if (expandedNodes) {
+            // console.log("Retrieving: ", expandedNodes);
+            setExpanded(expandedNodes); // Set expanded with the array directly
+            // console.log("Expanded:", expanded);
+        }
+    }, []);
+
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            localStorage.setItem('expandedNodes', JSON.stringify(expanded));
+            localStorage.setItem('treeData', JSON.stringify(data));
+            // console.log("treeData being stored: ", JSON.stringify(data));
+        }, 500); // 500 milliseconds
+
+        return () => clearTimeout(timeoutId);
+    }, [expanded, data]);
+
+
+    useEffect(() => {
+        // Retrieve the data from local storage
+        const localStorageData = JSON.parse(localStorage.getItem('treeData'));
+        // console.log("treeData stored: ", localStorageData)
+        if (localStorageData) {
+            setData(localStorageData);
+        }
+    }, []);
+
+
 
     const handleToggle = (event, nodeIds) => {
         setExpanded(nodeIds);
@@ -33,6 +73,7 @@ export default function CustomTreeView() {
         );
     };
 
+
     const collectNodeIds = (node) => {
         const nodeIds = [node.id];
 
@@ -49,34 +90,63 @@ export default function CustomTreeView() {
     // Create a state to manage form visibility for each node
     const [formVisibility, setFormVisibility] = useState({});
 
+    // Create a state to track the open and close timestamps for each form
+    const [formTimeSpent, setFormTimeSpent] = useState({});
+
+    useEffect(() => {
+        // Retrieve form time spent from local storage
+        const storedFormTimeSpent = JSON.parse(localStorage.getItem('formTimeSpent'));
+        if (storedFormTimeSpent) {
+            setFormTimeSpent(storedFormTimeSpent);
+        }
+    }, []);
+
     const toggleFormVisibility = (nodeId) => {
-        // Create a new object to store form visibility
         const updatedFormVisibility = { ...formVisibility };
+
+        // Toggle the form visibility
         updatedFormVisibility[nodeId] = !formVisibility[nodeId];
 
+        // Update the open and close timestamps
+        const updatedFormTimeSpent = { ...formTimeSpent };
+        const now = Date.now();
+
+        if (updatedFormVisibility[nodeId]) {
+            // Form is opening
+            updatedFormTimeSpent[nodeId] = updatedFormTimeSpent[nodeId] || 0; // Initialize if not set
+            updatedFormTimeSpent[nodeId] -= now; // Negative timestamp indicates the form is open
+        } else {
+            // Form is closing
+            const openTimestamp = formTimeSpent[nodeId];
+            if (openTimestamp) {
+                const elapsedTime = openTimestamp + now;
+                console.log(`Form ${nodeId} was open for ${elapsedTime} milliseconds`);
+                updatedFormTimeSpent[nodeId] = elapsedTime;
+
+                // Store the total time spent in local storage
+                localStorage.setItem('formTimeSpent', JSON.stringify(updatedFormTimeSpent));
+            }
+        }
+
         // Close all other open forms
-        for (const key in formVisibility) {
+        for (const key in updatedFormVisibility) {
             if (key !== nodeId) {
                 updatedFormVisibility[key] = false;
             }
         }
 
         setFormVisibility(updatedFormVisibility);
+        setFormTimeSpent(updatedFormTimeSpent);
     };
 
-    const [data, setData] = React.useState({
-        id: 'root',
-        name: ' ',
-        expanded: true,
-    });
 
     const CustomLabel = ({ node }) => {
         const [newNodeName, setNewNodeName] = React.useState('');
+        // Initialize counters for each node type
 
         const handleNameChange = (event) => {
             setNewNodeName(event.target.value);
         };
-
         const addNode = () => {
             let newNodeNameToUse = newNodeName || 'Objective ';
 
@@ -88,17 +158,38 @@ export default function CustomTreeView() {
                 newNodeNameToUse = 'Intervention ';
             }
 
+            // Create a new ID based on the node type and counter
+            let newId = '';
+            if (newNodeNameToUse === 'Goal ') {
+                newId = `goal ${goalCounter}`;
+                setGoalCounter(goalCounter + 1);
+                console.log(goalCounter)
+            } else if (newNodeNameToUse === 'Objective ') {
+                newId = `objective ${objectiveCounter}`;
+                setObjectiveCounter(objectiveCounter + 1);
+            } else if (newNodeNameToUse === 'Intervention ') {
+                newId = `Intervention: ${interventionCounter}`;
+                setInterventionCounter(interventionCounter + 1);
+            }
+
             const newNode = {
-                id: `new-${Date.now()}`,
+                // id: `new-${Date.now()}`,
+                id: newId,
                 name: newNodeNameToUse,
                 expanded: true,
             };
+            // Preserve the expanded state of existing nodes
+            const updatedDataWithNewNode = updateNode(data, node, newNode);
 
-            const updatedData = updateNode(data, node, newNode);
+            if (!expanded.includes('root')) {
+                setExpanded([...expanded, 'root', newNode.id]);
+            } else {
+                setExpanded([...expanded, newNode.id]);
+            }
 
-            setData(updatedData);
-            handleExpandClick();
+            setData(updatedDataWithNewNode);
         };
+
 
         return (
             <div>
@@ -154,7 +245,7 @@ export default function CustomTreeView() {
                 nodes.name === 'Objective ' ? (
                     <ObjectiveForm />
                 ) : nodes.name === 'Intervention ' ? (
-                    <InterventionForm />
+                    <InterventionForm interventionCounter={nodes.id}/>
                 ) : (
                     <GoalForm />
                 )
@@ -176,8 +267,6 @@ return (
         </Box>
         <TreeView
             aria-label="controlled"
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
             expanded={expanded}
             selected={selected}
             onNodeToggle={handleToggle}

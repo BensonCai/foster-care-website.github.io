@@ -39,8 +39,9 @@ export const CustomContent = React.forwardRef(function CustomContent(props, ref)
         console.log("Selection clicked");
     };
 
-    // Check if you want to hide the icon based on some conditions
     const hideIcon = true; // Change this condition as per your requirements
+
+    const isRootNode = nodeId === 'root';
 
     return (
         <div
@@ -53,8 +54,8 @@ export const CustomContent = React.forwardRef(function CustomContent(props, ref)
             onMouseDown={handleMouseDown}
             ref={ref}
         >
-            {/* Conditionally render the icon */}
-            {!hideIcon && (
+            {/* Conditionally render the icon for the root node */}
+            {isRootNode && (
                 <div
                     onClick={handleExpansionClick}
                     className={classes.iconContainer}

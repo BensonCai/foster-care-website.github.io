@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-export default function InterventionForm({ onSubmit }) {
+export default function InterventionForm({ interventionCounter, onSubmit }) {
     const [formData, setFormData] = useState({
-        // Define your form fields here
         title: '',
         description: '',
-        // Add more fields as needed
     });
+
+    console.log(interventionCounter)
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
@@ -24,14 +24,7 @@ export default function InterventionForm({ onSubmit }) {
             <h2>Intervention</h2>
             <form className="align" onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="title">Intervention Number:</label>
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleFormChange}
-                    />
+                    <label htmlFor="title">{interventionCounter}</label>
                 </div>
                 <div>
                     <label htmlFor="description">Intervention Statement</label>

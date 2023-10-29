@@ -6,7 +6,7 @@ import Home from "./Home";
 import Tab1 from './Tab1';
 import Tab2 from './Tab2';
 import complete from "./complete";
-import Tree from "./Tab2test";
+import narrative from "./narrative";
 
 function App() {
     return (
@@ -23,10 +23,10 @@ function App() {
                                     <Link to="/tab1">PDFs</Link>
                                 </li>
                                 <li>
-                                    <Link to="/tab2">Narrative</Link>
+                                    <Link to="/tab2">Forms</Link>
                                 </li>
                                 <li>
-                                    <Link to="/tab2test">Forms</Link>
+                                    <Link to="/narrative">Narrative</Link>
                                 </li>
 
                                 {/*<li>*/}
@@ -42,7 +42,7 @@ function App() {
                 <Route path="/home" component={Home} />
                 <Route path="/tab1" component={Tab1} />
                 <Route path="/tab2" component={Tab2} />
-                <Route path="/tab2test" component={Tree} />
+                <Route path="/narrative" component={narrative} />
                 <Route path="/complete" component={complete} />
             </Router>
         </div>

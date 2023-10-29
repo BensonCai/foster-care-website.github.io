@@ -56,3 +56,16 @@ label {
 input {
     flex: 3; /* Take up more space for inputs */
 }
+
+
+.narrativeInput {
+    width: 50%; /* Adjust the width to your desired size */
+    height: 100px; /* Adjust the height to your desired size */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Vertically center the input */
+    gap: 10px;
+    left:25%;
+    position: relative;
+}
