@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function InterventionForm({ interventionCounter, onSubmit }) {
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
+    const [formData, setFormData] = useState(() => {
+        const storedFormData = JSON.parse(localStorage.getItem(`interventionFormData-${interventionCounter}`)) || {
+            description: '',
+        };
+        return storedFormData;
     });
 
-    console.log(interventionCounter)
+    const storageKey = `interventionFormData-${interventionCounter}`;
+
+    // Load the form data from local storage on component mount
+    useEffect(() => {
+        const savedData = localStorage.getItem(storageKey);
+        if (savedData) {
+            setFormData(JSON.parse(savedData));
+        }
+    }, [storageKey]);
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
+
+    // Save the form data to local storage whenever it changes
+    useEffect(() => {
+        localStorage.setItem(storageKey, JSON.stringify(formData));
+    }, [formData, storageKey]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

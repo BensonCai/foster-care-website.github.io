@@ -59,6 +59,11 @@ export default function CustomTreeView() {
                 // The navigation type indicates a page reload
                 localStorage.removeItem('treeData'); // Reset localStorage
                 localStorage.removeItem('expandedNodes');
+                for (let key in localStorage) {
+                    if (key.startsWith('objective') || key.startsWith('goal') || key.startsWith('intervention')) {
+                        localStorage.removeItem(key);
+                    }
+                }
             } else {
                 // The user canceled the refresh
                 event.preventDefault();
@@ -242,9 +247,9 @@ export default function CustomTreeView() {
                 nodes.name === 'Objective ' ? (
                     <ObjectiveForm nodeId={nodes.id} />
                 ) : nodes.name === 'Intervention ' ? (
-                    <InterventionForm interventionCounter={nodes.id} />
+                    <InterventionForm nodeId={nodes.id} interventionCounter={nodes.id} />
                 ) : (
-                    <GoalForm />
+                    <GoalForm nodeId={nodes.id}/>
                 )
             )}
 
