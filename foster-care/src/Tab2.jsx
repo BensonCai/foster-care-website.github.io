@@ -5,14 +5,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { CustomTreeItem } from './CustomTreeItem';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import ObjectiveForm from './FormObjective';
 import InterventionForm from './FormIntervention';
 import GoalForm from './FormGoal';
 
 export default function CustomTreeView() {
     const [expanded, setExpanded] = React.useState([]);
-    // const [isFirstNodeAdded, setIsFirstNodeAdded] = useState(false);
     const [selected, setSelected] = React.useState([]);
     const [goalCounter, setGoalCounter] = React.useState(1);
     const [objectiveCounter, setObjectiveCounter] = React.useState(1);
@@ -27,31 +26,50 @@ export default function CustomTreeView() {
     useEffect(() => {
         const expandedNodes = JSON.parse(localStorage.getItem('expandedNodes'));
         if (expandedNodes) {
-            // console.log("Retrieving: ", expandedNodes);
-            setExpanded(expandedNodes); // Set expanded with the array directly
-            // console.log("Expanded:", expanded);
+            setExpanded(expandedNodes);
         }
     }, []);
-
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             localStorage.setItem('expandedNodes', JSON.stringify(expanded));
             localStorage.setItem('treeData', JSON.stringify(data));
-            // console.log("treeData being stored: ", JSON.stringify(data));
-        }, 500); // 500 milliseconds
+        }, 500);
 
         return () => clearTimeout(timeoutId);
     }, [expanded, data]);
 
-
     useEffect(() => {
-        // Retrieve the data from local storage
         const localStorageData = JSON.parse(localStorage.getItem('treeData'));
-        // console.log("treeData stored: ", localStorageData)
         if (localStorageData) {
             setData(localStorageData);
         }
+    }, []);
+
+    // Warn the user before refreshing the page
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            event.returnValue = 'All form data will be erased if you refresh. Do you want to continue?';
+
+            // Check if the user is trying to refresh
+            // can't find better documentation onf navigation.type
+            if (performance.navigation.type === 1) {
+                console.log('reloaded');
+                // The navigation type indicates a page reload
+                localStorage.removeItem('treeData'); // Reset localStorage
+                localStorage.removeItem('expandedNodes');
+            } else {
+                // The user canceled the refresh
+                event.preventDefault();
+            }
+        }
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
     }, []);
 
 
@@ -65,14 +83,12 @@ export default function CustomTreeView() {
     };
 
     const handleExpandClick = () => {
-        // Collect all node IDs dynamically from your tree data
         const allNodeIds = collectNodeIds(data);
 
         setExpanded((oldExpanded) =>
             oldExpanded.length === 0 ? allNodeIds : []
         );
     };
-
 
     const collectNodeIds = (node) => {
         const nodeIds = [node.id];
@@ -86,15 +102,10 @@ export default function CustomTreeView() {
         return nodeIds;
     };
 
-
-    // Create a state to manage form visibility for each node
     const [formVisibility, setFormVisibility] = useState({});
-
-    // Create a state to track the open and close timestamps for each form
     const [formTimeSpent, setFormTimeSpent] = useState({});
 
     useEffect(() => {
-        // Retrieve form time spent from local storage
         const storedFormTimeSpent = JSON.parse(localStorage.getItem('formTimeSpent'));
         if (storedFormTimeSpent) {
             setFormTimeSpent(storedFormTimeSpent);
@@ -103,32 +114,23 @@ export default function CustomTreeView() {
 
     const toggleFormVisibility = (nodeId) => {
         const updatedFormVisibility = { ...formVisibility };
-
-        // Toggle the form visibility
         updatedFormVisibility[nodeId] = !formVisibility[nodeId];
 
-        // Update the open and close timestamps
         const updatedFormTimeSpent = { ...formTimeSpent };
         const now = Date.now();
 
         if (updatedFormVisibility[nodeId]) {
-            // Form is opening
-            updatedFormTimeSpent[nodeId] = updatedFormTimeSpent[nodeId] || 0; // Initialize if not set
-            updatedFormTimeSpent[nodeId] -= now; // Negative timestamp indicates the form is open
+            updatedFormTimeSpent[nodeId] = updatedFormTimeSpent[nodeId] || 0;
+            updatedFormTimeSpent[nodeId] -= now;
         } else {
-            // Form is closing
             const openTimestamp = formTimeSpent[nodeId];
             if (openTimestamp) {
                 const elapsedTime = openTimestamp + now;
-                console.log(`Form ${nodeId} was open for ${elapsedTime} milliseconds`);
                 updatedFormTimeSpent[nodeId] = elapsedTime;
-
-                // Store the total time spent in local storage
                 localStorage.setItem('formTimeSpent', JSON.stringify(updatedFormTimeSpent));
             }
         }
 
-        // Close all other open forms
         for (const key in updatedFormVisibility) {
             if (key !== nodeId) {
                 updatedFormVisibility[key] = false;
@@ -139,14 +141,13 @@ export default function CustomTreeView() {
         setFormTimeSpent(updatedFormTimeSpent);
     };
 
-
     const CustomLabel = ({ node }) => {
-        const [newNodeName, setNewNodeName] = React.useState('');
-        // Initialize counters for each node type
+        const [newNodeName, setNewNodeName] = React.useState();
 
         const handleNameChange = (event) => {
             setNewNodeName(event.target.value);
         };
+
         const addNode = () => {
             let newNodeNameToUse = newNodeName || 'Objective ';
 
@@ -158,12 +159,10 @@ export default function CustomTreeView() {
                 newNodeNameToUse = 'Intervention ';
             }
 
-            // Create a new ID based on the node type and counter
             let newId = '';
             if (newNodeNameToUse === 'Goal ') {
                 newId = `goal ${goalCounter}`;
                 setGoalCounter(goalCounter + 1);
-                console.log(goalCounter)
             } else if (newNodeNameToUse === 'Objective ') {
                 newId = `objective ${objectiveCounter}`;
                 setObjectiveCounter(objectiveCounter + 1);
@@ -173,12 +172,11 @@ export default function CustomTreeView() {
             }
 
             const newNode = {
-                // id: `new-${Date.now()}`,
                 id: newId,
                 name: newNodeNameToUse,
                 expanded: true,
             };
-            // Preserve the expanded state of existing nodes
+
             const updatedDataWithNewNode = updateNode(data, node, newNode);
 
             if (!expanded.includes('root')) {
@@ -189,7 +187,6 @@ export default function CustomTreeView() {
 
             setData(updatedDataWithNewNode);
         };
-
 
         return (
             <div>
@@ -243,9 +240,9 @@ export default function CustomTreeView() {
         >
             {formVisibility[nodes.id] && (
                 nodes.name === 'Objective ' ? (
-                    <ObjectiveForm />
+                    <ObjectiveForm nodeId={nodes.id} />
                 ) : nodes.name === 'Intervention ' ? (
-                    <InterventionForm interventionCounter={nodes.id}/>
+                    <InterventionForm interventionCounter={nodes.id} />
                 ) : (
                     <GoalForm />
                 )
@@ -256,7 +253,6 @@ export default function CustomTreeView() {
                 : null}
         </CustomTreeItem>
     );
-
 
 return (
     <Box sx={{ minHeight: 270, flexGrow: 1, maxWidth: 300 }}>

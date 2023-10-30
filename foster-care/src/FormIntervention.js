@@ -36,7 +36,7 @@ export default function InterventionForm({ interventionCounter, onSubmit }) {
                         style={{ width: "99.25%" }}
                     />
                 </div>
-                <button type="submit">Submit</button>
+                {/*<button type="submit">Submit</button>*/}
             </form>
         </div>
     );

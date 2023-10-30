@@ -74,7 +74,7 @@ export default function GoalForm({ onSubmit }) {
                     />
                 </div>
                 {/* Add more form fields here */}
-                <button type="submit">Submit</button>
+                {/*<button type="submit">Submit</button>*/}
             </form>
         </div>
     );

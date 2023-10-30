@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function ObjectiveForm({ onSubmit }) {
-    const [formData, setFormData] = useState({
-        // Define your form fields here
-        title: '',
-        description: '',
-        // Add more fields as needed
+export default function ObjectiveForm({ nodeId, onSubmit }) {
+    // Initialize formData state with data from localStorage or with default values
+    const [formData, setFormData] = useState(() => {
+        const storedFormData = JSON.parse(localStorage.getItem(`objectiveFormData-${nodeId}`)) || {
+            title: '',
+            description: '',
+            // Add more fields as needed with default values
+        };
+        return storedFormData;
     });
+
+    useEffect(() => {
+        // Load form data from localStorage when the component mounts
+        const storedFormData = JSON.parse(localStorage.getItem(`objectiveFormData-${nodeId}`));
+        if (storedFormData) {
+            setFormData(storedFormData);
+        }
+    }, [nodeId]);
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
@@ -18,6 +29,11 @@ export default function ObjectiveForm({ onSubmit }) {
         // Perform form submission logic here
         onSubmit(formData);
     };
+
+    useEffect(() => {
+        // Save form data to localStorage whenever it changes
+        localStorage.setItem(`objectiveFormData-${nodeId}`, JSON.stringify(formData));
+    }, [formData, nodeId]);
 
     return (
         <div className="form-container">
@@ -43,7 +59,7 @@ export default function ObjectiveForm({ onSubmit }) {
                         style={{ width: "99.25%" }}
                     />
                 </div>
-                <button type="submit">Submit</button>
+                {/*<button type="submit">Submit</button>*/}
             </form>
         </div>
     );
