@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import ObjectiveForm from './FormObjective';
 import InterventionForm from './FormIntervention';
 import GoalForm from './FormGoal';
+import SubmitDataButton from "./submitButton";
+import { useHistory } from "react-router-dom";
 
 export default function CustomTreeView() {
     const [expanded, setExpanded] = React.useState([]);
@@ -22,6 +24,35 @@ export default function CustomTreeView() {
         name: ' ',
         expanded: true,
     });
+
+    const history = useHistory();
+
+    const handleSubmitData = () => {
+        const localStorageData = {};
+
+        for (let key in localStorage) {
+            if (
+                key.startsWith('goal') ||               // form data
+                key.startsWith('intervention') ||       // form data
+                key.startsWith('objective') ||          // form data
+                key === 'treeData' ||                   // tree data
+                key === 'expandedNodes' ||              // expanded nodes
+                key === 'totalTime' ||                  // time spent on pdfs
+                key === 'formTimeSpent' ||              // time spend on forms
+                key === 'narrativeInput'                // narrative data
+            ) {
+                localStorageData[key] = localStorage.getItem(key);
+            }
+        }
+
+        console.log(localStorageData)
+        // send it to server when i a db to connect to
+
+        // eslint-disable-next-line no-restricted-globals
+        history.push('/complete');
+
+        // return localStorageData;
+    };
 
     useEffect(() => {
         const expandedNodes = JSON.parse(localStorage.getItem('expandedNodes'));
@@ -275,6 +306,8 @@ return (
         >
             {renderTree(data)}
         </TreeView>
+
+        <SubmitDataButton onClick={handleSubmitData} />
     </Box>
 );
 }

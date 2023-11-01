@@ -28,7 +28,6 @@ function App() {
                                 <li>
                                     <Link to="/narrative">Narrative</Link>
                                 </li>
-
                                 {/*<li>*/}
                                 {/*    <Link to="/complete">complete</Link>*/}
                                 {/*</li>*/}

@@ -1,23 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import View from "./view";
+import "./App.css";
 
 function AccordionItem({ item, isOpen, onToggle }) {
-    // const [timer, setTimer] = useState(0);
-    // console.log(item)
-
-    // useEffect(() => {
-    //     let interval;
-    //     if (isOpen) {
-    //         interval = setInterval(() => {
-    //             setTimer((prevTimer) => prevTimer + 1);
-    //         }, 1000);
-    //     } else {
-    //         clearInterval(interval);
-    //     }
-    //
-    //     return () => clearInterval(interval);
-    // }, [isOpen]);
-
     return (
         // open the accordion
         <div>

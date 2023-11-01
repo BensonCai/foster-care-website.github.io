@@ -43,11 +43,24 @@
   display: flex;
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
-  /* Other styles for .accordion-title */
+  text-align: center;
+  width: 100%;
+  line-height: 1;
+  height: 2.2em; /* Add a height to create a visible container */
+  border: 1px solid #ccc; /* Add a border for better visualization */
+  cursor: grab;
+  background-color: whitesmoke;
+  border-radius: 10px;
 }
 
+
 .accordion-item.open .content {
-  margin-top: 12%;
+  /*margin-top: 3.75%;*/
+  /*cursor: grab;*/
+  /*border: 2px solid black;*/
+  height: 75%;
+  width: 70%;
+  left: 10%;
   display: block; /* Show the content when the item is open */
 }
 
@@ -57,8 +70,14 @@
   /*height: 100vh; !* 100% of the viewport height *!*/
 }
 
+.centerPlease {
+  justify-content: center;
+}
+
 .container {
   display: flex; /* Use flexbox for layout */
+  width: 15%;
+  /*border: 2px solid black;*/
   /*height: 100vh; !* 100% of the viewport height *!*/
 }
 
@@ -122,7 +141,7 @@
 
 .accordion-container {
   position: fixed;
-  top: 20px; /* Adjust the top position as needed */
+  top: 30px; /* Adjust the top position as needed */
   right: 20px; /* Adjust the right position as needed */
   width: 300px; /* Adjust the width as needed */
 }

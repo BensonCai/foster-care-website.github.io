@@ -42,7 +42,7 @@ function Accordion({ items }) {
     return (
         <div className="accordion">
             {/* TIMER */}
-            <div className="total-time">Total time spent: {totalTime} seconds</div>
+            {/*<div className="total-time">Total time spent: {totalTime} seconds</div>*/}
             {items.map((item, index) => (
                 <AccordionItem
                     key={index}
