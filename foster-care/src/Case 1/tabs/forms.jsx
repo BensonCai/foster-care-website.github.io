@@ -4,15 +4,15 @@ import Button from '@mui/material/Button';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { TreeView } from '@mui/x-tree-view/TreeView';
-import { CustomTreeItem } from './CustomTreeItem';
+import { CustomTreeItem } from '../CustomTreeItem';
 import { useEffect, useState } from 'react';
-import ObjectiveForm from './FormObjective';
-import InterventionForm from './FormIntervention';
-import GoalForm from './FormGoal';
-import SubmitDataButton from "./submitButton";
+import ObjectiveForm from '../../Forms/FormObjective';
+import InterventionForm from '../../Forms/FormIntervention';
+import GoalForm from '../../Forms/FormGoal';
+import SubmitDataButton from "../../submitButton";
 import { useHistory } from "react-router-dom";
 
-export default function CustomTreeView() {
+export default function FORMS() {
     const [expanded, setExpanded] = React.useState([]);
     const [selected, setSelected] = React.useState([]);
     const [goalCounter, setGoalCounter] = React.useState(1);
@@ -27,32 +27,32 @@ export default function CustomTreeView() {
 
     const history = useHistory();
 
-    const handleSubmitData = () => {
-        const localStorageData = {};
-
-        for (let key in localStorage) {
-            if (
-                key.startsWith('goal') ||               // form data
-                key.startsWith('intervention') ||       // form data
-                key.startsWith('objective') ||          // form data
-                key === 'treeData' ||                   // tree data
-                key === 'expandedNodes' ||              // expanded nodes
-                key === 'totalTime' ||                  // time spent on pdfs
-                key === 'formTimeSpent' ||              // time spend on forms
-                key === 'narrativeInput'                // narrative data
-            ) {
-                localStorageData[key] = localStorage.getItem(key);
-            }
-        }
-
-        console.log(localStorageData)
-        // send it to server when i a db to connect to
-
-        // eslint-disable-next-line no-restricted-globals
-        history.push('/complete');
-
-        // return localStorageData;
-    };
+    // const handleSubmitData = () => {
+    //     const localStorageData = {};
+    //
+    //     for (let key in localStorage) {
+    //         if (
+    //             key.startsWith('goal') ||               // form data
+    //             key.startsWith('intervention') ||       // form data
+    //             key.startsWith('objective') ||          // form data
+    //             key === 'treeData' ||                   // tree data
+    //             key === 'expandedNodes' ||              // expanded nodes
+    //             key === 'totalTime' ||                  // time spent on pdfs
+    //             key === 'formTimeSpent' ||              // time spend on forms
+    //             key === 'narrativeInput'                // narrative data
+    //         ) {
+    //             localStorageData[key] = localStorage.getItem(key);
+    //         }
+    //     }
+    //
+    //     console.log(localStorageData)
+    //     // send it to server when i a db to connect to
+    //
+    //     // eslint-disable-next-line no-restricted-globals
+    //     history.push('/likert');
+    //
+    //     // return localStorageData;
+    // };
 
     useEffect(() => {
         const expandedNodes = JSON.parse(localStorage.getItem('expandedNodes'));
@@ -307,7 +307,7 @@ return (
             {renderTree(data)}
         </TreeView>
 
-        <SubmitDataButton onClick={handleSubmitData} />
+        <SubmitDataButton/>
     </Box>
 );
 }

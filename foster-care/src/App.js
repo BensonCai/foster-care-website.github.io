@@ -2,11 +2,12 @@ import React from 'react';
 import "./nav.css";
 import "./App.css";
 import {BrowserRouter as Router, Link, Redirect, Route} from 'react-router-dom';
-import Home from "./Home";
-import Tab1 from './Tab1';
-import Tab2 from './Tab2';
-import complete from "./complete";
-import narrative from "./narrative";
+import Home from "./Case 1/tabs/Home";
+import FORMS from './Case 1/tabs/forms';
+import complete from "./Case 1/complete";
+import narrative from "./Case 1/tabs/narrative";
+import PDFS from "./Case 1/tabs/pdfs";
+import likertScale from "./Case 1/tabs/Likert";
 
 function App() {
     return (
@@ -16,21 +17,10 @@ function App() {
                     <div className="nav">
                         <nav>
                             <ul className="align-items">
-                                <li>
-                                    <Link to="/home">Home</Link>
-                                </li>
-                                <li>
-                                    <Link to="/tab1">PDFs</Link>
-                                </li>
-                                <li>
-                                    <Link to="/tab2">Forms</Link>
-                                </li>
-                                <li>
-                                    <Link to="/narrative">Narrative</Link>
-                                </li>
-                                {/*<li>*/}
-                                {/*    <Link to="/complete">complete</Link>*/}
-                                {/*</li>*/}
+                                <li><Link to="/home">Home</Link></li>
+                                <li><Link to="/pdfs">PDFs</Link></li>
+                                <li><Link to="/forms">Forms</Link></li>
+                                <li><Link to="/narrative">Narrative</Link></li>
                             </ul>
                         </nav>
                     </div>
@@ -39,10 +29,11 @@ function App() {
                 <Route exact path="/" render={() => <Redirect to="/home" />} />
 
                 <Route path="/home" component={Home} />
-                <Route path="/tab1" component={Tab1} />
-                <Route path="/tab2" component={Tab2} />
+                <Route path="/pdfs" component={PDFS} />
+                <Route path="/forms" component={FORMS} />
                 <Route path="/narrative" component={narrative} />
                 <Route path="/complete" component={complete} />
+                <Route path="/likert" component={likertScale} />
             </Router>
         </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
-import View from "./view";
-import "./App.css";
+import View from "../view";
+import "../App.css";
 
 function AccordionItem({ item, isOpen, onToggle }) {
     return (

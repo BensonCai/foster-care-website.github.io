@@ -1,0 +1,11 @@
+fieldset.likertScale {
+    font-family: "Roboto", sans-serif;
+    padding: 1em;
+    border: thin solid darkgreen;
+    border-radius: 1em;
+    margin-right: 0;
+}
+
+.withBackground {
+    background-color: whitesmoke;
+}

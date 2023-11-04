@@ -1,8 +1,8 @@
 import React from 'react';
-import Accordion from './Accordion';
-import View from "./view";
+import Accordion from '../Accordion';
+import View from "../../view";
 
-export default function Tab1() {
+export default function PDFS() {
     const accordionItems = [
         {
             // title: 'PDF1',
