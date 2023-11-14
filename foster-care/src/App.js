@@ -2,7 +2,7 @@ import React from 'react';
 import "./nav.css";
 import "./App.css";
 import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom';
-import Home from "./Case 1/tabs/Home";
+import Index from "./Case 1/tabs";
 import FORMS from './Case 1/tabs/forms';
 import complete from "./Case 1/complete";
 import narrative from "./Case 1/tabs/narrative";
@@ -28,7 +28,7 @@ function App() {
                 {/* goes to home page upon starting */}
                 <Route exact path="/" render={() => <Redirect to="/home" />} />
 
-                <Route path="/home" component={Home} />
+                <Route path="/home" component={Index} />
                 <Route path="/pdfs" component={PDFS} />
                 <Route path="/forms" component={FORMS} />
                 <Route path="/narrative" component={narrative} />

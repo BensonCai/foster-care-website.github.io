@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Home() {
+function Index() {
     return (
         <div>
             <h1>Foster Care Website</h1>
@@ -12,4 +12,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Index;
