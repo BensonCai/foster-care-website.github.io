@@ -1,4 +1,4 @@
-# FAI Foster Care Website
+# FAI Foster Care Website [Benson Cai]
 
 This website is a simulation of your typical treatment planning process. 
 You will have 30 minutes for each case,
