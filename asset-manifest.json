@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/foster-care-website.github.io/static/css/main.5264f76c.css",
-    "main.js": "/foster-care-website.github.io/static/js/main.26212b13.js",
+    "main.css": "/foster-care-website.github.io/static/css/main.7c0085a0.css",
+    "main.js": "/foster-care-website.github.io/static/js/main.285e5768.js",
     "static/js/787.d4aba7ab.chunk.js": "/foster-care-website.github.io/static/js/787.d4aba7ab.chunk.js",
     "index.html": "/foster-care-website.github.io/index.html",
-    "main.5264f76c.css.map": "/foster-care-website.github.io/static/css/main.5264f76c.css.map",
-    "main.26212b13.js.map": "/foster-care-website.github.io/static/js/main.26212b13.js.map",
+    "main.7c0085a0.css.map": "/foster-care-website.github.io/static/css/main.7c0085a0.css.map",
+    "main.285e5768.js.map": "/foster-care-website.github.io/static/js/main.285e5768.js.map",
     "787.d4aba7ab.chunk.js.map": "/foster-care-website.github.io/static/js/787.d4aba7ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5264f76c.css",
-    "static/js/main.26212b13.js"
+    "static/css/main.7c0085a0.css",
+    "static/js/main.285e5768.js"
   ]
 }
