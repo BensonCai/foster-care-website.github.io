@@ -2,7 +2,7 @@ import React from 'react';
 import Accordion from '../Accordion';
 import View from "../../view";
 
-export default function PDFS() {
+export default function case1PDFS() {
     const accordionItems = [
         {
             // title: 'PDF1',

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Case 1/forms.css';
+import './Cases/forms.css';
 import {useHistory} from "react-router-dom";
 
 export default function SubmitDataButton({ onClick }) {
@@ -23,8 +23,13 @@ export default function SubmitDataButton({ onClick }) {
             }
         }
 
-        console.log(localStorageData)
         // send it to server when i a db to connect to
+        console.log(localStorageData)
+
+        // reset it for the next case
+        for (let key in localStorageData) {
+            localStorage.removeItem(key);
+        }
 
         // eslint-disable-next-line no-restricted-globals
         history.push('/likert');
