@@ -7,3 +7,7 @@ including a clinical summary/narrative, goals, objectives, and interventions.
 Your progress through the site will be collected for study purposes. 
 As you go through this process, please continually verbalize your thought process 
 as explained during the introduction.
+
+For testing purposes, if something seems incorrect while using it, delete the localstorage and
+the website should return to normal
+(i.e. some of the functionality is based on localstorage values)
