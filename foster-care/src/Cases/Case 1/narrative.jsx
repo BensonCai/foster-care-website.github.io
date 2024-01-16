@@ -89,8 +89,10 @@ export default function Narrative() {
 
     return (
         <div>
-            <input
-                type="text"
+            <h1>Detailed Instructions</h1>
+            <p >Provide a brief assessment of major case factors and youth functioning. Also list all identified problems/needs and indicate whether they will be treated, referred, or deferred</p>
+
+            <textarea
                 value={inputValue}
                 onChange={handleInputChange}
                 placeholder="Enter your text"

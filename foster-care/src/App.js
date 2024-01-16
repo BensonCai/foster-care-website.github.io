@@ -12,7 +12,6 @@ import Navigation from "./Cases/navigation";
 import case2PDFS from "./Cases/Case 2/case2PDFS";
 import case3PDFS from "./Cases/Case 3/case3PDFS";
 
-
 class App extends React.Component {
     render() {
         return (
@@ -31,8 +30,6 @@ class App extends React.Component {
                         <Route path="/forms" component={FORMS} />
                         <Route path="/narrative" component={narrative} />
                         <Route path="/likert" component={likertScale} />
-
-
 
 
                         <Route path="/complete" component={complete} />

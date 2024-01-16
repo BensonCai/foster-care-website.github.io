@@ -23,12 +23,12 @@ function Navigation() {
                 <ul className="align-items">
                     <li><Link to="/home">Home</Link></li>
                     {/* Conditionally render based on the state value */}
-                    {caseValue === '1' && <li><Link to="/case1pdfs">PDFs</Link></li>}
-                    {caseValue === '2' && <li><Link to="/case2pdfs">PDFs</Link></li>}
-                    {caseValue === '3' && <li><Link to="/case3pdfs">PDFs</Link></li>}
+                    {caseValue === '1' && <li><Link to="/case1pdfs">Referral Information and Assessments</Link></li>}
+                    {caseValue === '2' && <li><Link to="/case2pdfs">Referral Information and Assessments</Link></li>}
+                    {caseValue === '3' && <li><Link to="/case3pdfs">Referral Information and Assessments</Link></li>}
                     {/*  */}
-                    <li><Link to="/forms">Forms</Link></li>
-                    <li><Link to="/narrative">Narrative</Link></li>
+                    <li><Link to="/narrative">Case Summary</Link></li>
+                    <li><Link to="/forms">Treatment Plan</Link></li>
                 </ul>
             </nav>
         </div>

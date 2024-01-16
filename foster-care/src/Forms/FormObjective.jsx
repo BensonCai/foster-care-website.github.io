@@ -27,7 +27,7 @@ export default function ObjectiveForm({ nodeId, onSubmit }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Perform form submission logic here
-        onSubmit(formData);
+        //onSubmit(formData);
     };
 
     useEffect(() => {

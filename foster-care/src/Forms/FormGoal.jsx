@@ -34,7 +34,7 @@ export default function GoalForm({ nodeId, onSubmit }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Perform form submission logic here
-        onSubmit(formData);
+        //onSubmit(formData);
     };
 
     return (

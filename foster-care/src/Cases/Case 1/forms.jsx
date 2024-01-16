@@ -72,9 +72,20 @@ export default function FORMS() {
 
     useEffect(() => {
         const localStorageData = JSON.parse(localStorage.getItem('treeData'));
+        if (localStorage.getItem("goalsCreated") === null) {
+            localStorage.setItem("goalsCreated", JSON.stringify(0));
+            localStorage.setItem("objectivesCreated", JSON.stringify(0));
+            localStorage.setItem("interventionsCreated", JSON.stringify(0));
+        }
+
+        setGoalCounter(JSON.parse(localStorage.goalsCreated));
+        setObjectiveCounter(JSON.parse(localStorage.objectivesCreated));
+        setInterventionCounter(JSON.parse(localStorage.interventionsCreated));
+
         if (localStorageData) {
             setData(localStorageData);
         }
+
     }, []);
 
     // Warn the user before refreshing the page
@@ -84,7 +95,7 @@ export default function FORMS() {
             event.returnValue = 'All form data will be erased if you refresh. Do you want to continue?';
 
             // Check if the user is trying to refresh
-            // can't find better documentation onf navigation.type
+            // can't find better documentation on navigation.type
             if (performance.navigation.type === 1) {
                 console.log('reloaded');
                 // The navigation type indicates a page reload
@@ -199,12 +210,17 @@ export default function FORMS() {
             if (newNodeNameToUse === 'Goal ') {
                 newId = `goal ${goalCounter}`;
                 setGoalCounter(goalCounter + 1);
+                localStorage.setItem("goalsCreated", JSON.stringify(goalCounter+1));
             } else if (newNodeNameToUse === 'Objective ') {
                 newId = `objective ${objectiveCounter}`;
                 setObjectiveCounter(objectiveCounter + 1);
+                localStorage.setItem("objectivesCreated", 
+                                    JSON.stringify(objectiveCounter+1));
             } else if (newNodeNameToUse === 'Intervention ') {
                 newId = `Intervention: ${interventionCounter}`;
                 setInterventionCounter(interventionCounter + 1);
+                localStorage.setItem("interventionsCreated", 
+                                    JSON.stringify(interventionCounter+1));
             }
 
             const newNode = {
