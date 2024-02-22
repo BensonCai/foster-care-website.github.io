@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
+import usePageTimer from "../pagetimer";
 
 function Index() {
+    const elapsedTime = usePageTimer('Home')
+
     useEffect(() => {
         const storedCase = localStorage.getItem('case');
         if (!storedCase) {
@@ -14,7 +17,7 @@ function Index() {
                 console.error('Error while setting item:', error);
             }
         } else {
-            console.log('Existing case key found:', storedCase);
+            // console.log('Existing case key found:', storedCase);
         }
     }, []);
 
@@ -26,6 +29,7 @@ function Index() {
                 including a clinical summary/narrative, goals, objectives, and interventions. Your progress through the site will be collected for study purposes.
                 As you go through this process, please continually verbalize your thought process as explained during the introduction.
             </h5>
+            <p>{elapsedTime} sec</p>
         </div>
     );
 }

@@ -5,19 +5,25 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { CustomTreeItem } from '../CustomTreeItem';
-import { useEffect, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import ObjectiveForm from '../../Forms/FormObjective';
 import InterventionForm from '../../Forms/FormIntervention';
 import GoalForm from '../../Forms/FormGoal';
 import SubmitDataButton from "../../submitButton";
 import { useHistory } from "react-router-dom";
+import usePageTimer from "../pagetimer";
 
 export default function FORMS() {
+    const elapsedTime = usePageTimer('Treatment Plan')
+
     const [expanded, setExpanded] = React.useState([]);
     const [selected, setSelected] = React.useState([]);
     const [goalCounter, setGoalCounter] = React.useState(1);
     const [objectiveCounter, setObjectiveCounter] = React.useState(1);
     const [interventionCounter, setInterventionCounter] = React.useState(1);
+
+    // const [elapsedTimer, setElapsedTimer] = useState(0);
+    // const [timer, setTimer] = useState(null);
 
     const [data, setData] = React.useState({
         id: 'root',
@@ -159,6 +165,10 @@ export default function FORMS() {
         }
     }, []);
 
+    // useeffect based on form visibility
+    // when a form is visible take the nodeID
+    // start a timer
+    // push both to elapsedTimes when nodeID changes or form visibility changes
     const toggleFormVisibility = (nodeId) => {
         const updatedFormVisibility = { ...formVisibility };
         updatedFormVisibility[nodeId] = !formVisibility[nodeId];
@@ -187,6 +197,79 @@ export default function FORMS() {
         setFormVisibility(updatedFormVisibility);
         setFormTimeSpent(updatedFormTimeSpent);
     };
+
+    // pleaze work
+    // Effect to track when a form becomes visible and start a timer
+    useEffect(() => {
+        for (const nodeId in formVisibility) {
+            if (formVisibility[nodeId]) {
+                console.log("Visible Form Node ID:", nodeId);
+
+                // Start the timer when the form becomes visible
+                const startTime = Date.now();
+
+                // Store the start time in localStorage
+                localStorage.setItem(`startTime_${nodeId}`, startTime.toString());
+            } else {
+                // If the form becomes hidden, calculate the elapsed time
+                const startTime = parseInt(localStorage.getItem(`startTime_${nodeId}`));
+                if (startTime) {
+                    const elapser = Date.now() - startTime;
+                    const elapsedTime = Math.floor(elapser/1000);
+                    console.log(`Form ${nodeId} was open for ${elapsedTime} milliseconds`);
+
+                    // Retrieve existing elapsed time data from localStorage
+                    const storedElapsedTime = JSON.parse(localStorage.getItem("elapsedTimes")) || [];
+
+                    // Add the current pair to the list of elapsed times
+                    storedElapsedTime.push({ nodeId, elapsedTime });
+
+                    // Store the updated elapsed time data back into localStorage
+                    localStorage.setItem("elapsedTimes", JSON.stringify(storedElapsedTime));
+
+                    // Remove the start time entry from localStorage
+                    localStorage.removeItem(`startTime_${nodeId}`);
+                }
+            }
+        }
+    }, [formVisibility]);
+
+
+    // Effect to track when a form becomes visible and start a timer
+    // const startTimeRef = useRef(null);
+    // useEffect(() => {
+    //     if (timer) {
+    //         clearInterval(timer)
+    //     }
+    //     for (const nodeId in formVisibility) {
+    //         // when node is visible
+    //         if (formVisibility[nodeId]) {
+    //             console.log("Visible Form Node ID:", nodeId);
+    //             // Start and store
+    //             const startTime = Date.now(); // Record the start time when the tab is focused
+    //             startTimeRef.current = startTime; // Store the start time
+    //             const newTimer = setInterval(() => {
+    //                 const currentTime = Date.now();
+    //                 const elapsedTimeSeconds = Math.floor((currentTime - startTime) / 1000); // Calculate elapsed time in seconds
+    //                 setElapsedTimer(elapsedTimeSeconds);
+    //             }, 1000); // Update elapsed time every second
+    //             setTimer(newTimer);
+    //         } else {
+    //             // else means the form becomes hidden so now calculate time
+    //             // startTime
+    //             console.log(`Form ${nodeId} was open for ${elapsedTimer} seconds`);
+    //             // retrieve
+    //             const storedElapsedTime = JSON.parse(localStorage.getItem("elapsedTimes")) || [];
+    //             // insert
+    //             storedElapsedTime.push({ nodeId, elapsedTime });
+    //             // store
+    //             localStorage.setItem("elapsedTimes", JSON.stringify(storedElapsedTime));
+    //             // Remove the start time entry from localStorage
+    //             localStorage.removeItem(`startTime_${nodeId}`);
+    //         }
+    //     }
+    // }, [formVisibility]);
+
 
     const CustomLabel = ({ node }) => {
         const [newNodeName, setNewNodeName] = React.useState();
@@ -322,6 +405,8 @@ return (
         >
             {renderTree(data)}
         </TreeView>
+
+        <p>{elapsedTime} sec</p>
 
         <SubmitDataButton/>
     </Box>

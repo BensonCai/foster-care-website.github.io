@@ -1,8 +1,11 @@
 import React from 'react';
 import Accordion from '../Accordion';
 import View from "../../view";
+import usePageTimer from "../pagetimer";
 
-export default function case1PDFS() {
+export default function Case1PDFS() {
+    const elapsedTime = usePageTimer('Referral Information')
+
     const accordionItems = [
         {
             // title: 'PDF1',
@@ -90,11 +93,11 @@ export default function case1PDFS() {
         <div>
             {/*<h1>PDFs</h1>*/}
             {/* Comment Out Deploying*/}
-            {/*<div>Total Duration: {totalDuration} Seconds</div>*/}
-
             <div className="maincontainer">
                 <Accordion items={accordionItems}></Accordion>
             </div>
+            {/*<div>Total Duration: {totalDuration} Seconds</div>*/}
+            <p>{elapsedTime} sec</p>
         </div>
     );
 }

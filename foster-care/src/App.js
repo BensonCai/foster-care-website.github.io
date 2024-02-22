@@ -6,7 +6,7 @@ import Index from "./Cases/Case 1";
 import FORMS from './Cases/Case 1/forms';
 import complete from "./Cases/complete";
 import narrative from "./Cases/Case 1/narrative";
-import case1PDFS from "./Cases/Case 1/case1PDFS";
+import Case1PDFS from "./Cases/Case 1/Case1PDFS";
 import likertScale from "./Cases/Case 1/likert";
 import Navigation from "./Cases/navigation";
 import case2PDFS from "./Cases/Case 2/case2PDFS";
@@ -24,7 +24,7 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/" render={() => <Redirect to="/home" />} />
                         <Route path="/home" component={Index} />
-                        <Route path="/case1pdfs" component={case1PDFS} />
+                        <Route path="/case1pdfs" component={Case1PDFS} />
                         <Route path="/case2pdfs" component={case2PDFS} />
                         <Route path="/case3pdfs" component={case3PDFS} />
                         <Route path="/forms" component={FORMS} />

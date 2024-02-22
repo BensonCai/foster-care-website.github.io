@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../treeform.css';
 import SubmitDataButton from "../../submitButton";
 import {useHistory} from "react-router-dom";
+import usePageTimer from "../pagetimer";
 
 export default function Narrative() {
+    const elapsedTime = usePageTimer("Case Summary")
+
     // Initialize the input value from local storage if available
     const [inputValue, setInputValue] = useState(
         localStorage.getItem('narrativeInput') || ''
@@ -98,6 +101,7 @@ export default function Narrative() {
                 placeholder="Enter your text"
                 className="narrativeInput"
             />
+            <p>Elapsed: {elapsedTime} sec</p>
 
             {/*<button onClick={handleSave}>Save</button>*/}
             <SubmitDataButton/>
