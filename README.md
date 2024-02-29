@@ -9,6 +9,10 @@
 // At the end: install localstorage and give it to us
 // Have a tutorial/demo (on forms, create 3 then give then a next button)
 
+// Haven't run yarn run deploy yet 
+
+//TODO FORMS PAGE CASE NAME INPUT KEEPS REFRESHING
+
 This website is a simulation of your typical treatment planning process. 
 You will have 30 minutes for each case,
 please use this time to review case documentation as you see fit and develop a treatment plan 

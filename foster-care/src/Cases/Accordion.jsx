@@ -18,9 +18,9 @@ function Accordion({ items }) {
     useEffect(() => {
         // Clear the previous timer if it exists
         if (activeIndex !== null) {
-            if (timer) {
+            // if (timer) {
                 clearInterval(timer);
-            }
+            // }
 
             // Start a new timer for the current tab
             const startTime = Date.now(); // Record the start time when the tab is focused

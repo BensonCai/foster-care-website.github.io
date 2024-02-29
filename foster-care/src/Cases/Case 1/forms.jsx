@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { CustomTreeItem } from '../CustomTreeItem';
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import ObjectiveForm from '../../Forms/FormObjective';
 import InterventionForm from '../../Forms/FormIntervention';
 import GoalForm from '../../Forms/FormGoal';
@@ -22,8 +22,6 @@ export default function FORMS() {
     const [objectiveCounter, setObjectiveCounter] = React.useState(1);
     const [interventionCounter, setInterventionCounter] = React.useState(1);
 
-    // const [elapsedTimer, setElapsedTimer] = useState(0);
-    // const [timer, setTimer] = useState(null);
 
     const [data, setData] = React.useState({
         id: 'root',
@@ -31,34 +29,6 @@ export default function FORMS() {
         expanded: true,
     });
 
-    const history = useHistory();
-
-    // const handleSubmitData = () => {
-    //     const localStorageData = {};
-    //
-    //     for (let key in localStorage) {
-    //         if (
-    //             key.startsWith('goal') ||               // form data
-    //             key.startsWith('intervention') ||       // form data
-    //             key.startsWith('objective') ||          // form data
-    //             key === 'treeData' ||                   // tree data
-    //             key === 'expandedNodes' ||              // expanded nodes
-    //             key === 'totalTime' ||                  // time spent on pdfs
-    //             key === 'formTimeSpent' ||              // time spend on forms
-    //             key === 'narrativeInput'                // narrative data
-    //         ) {
-    //             localStorageData[key] = localStorage.getItem(key);
-    //         }
-    //     }
-    //
-    //     console.log(localStorageData)
-    //     // send it to server when i a db to connect to
-    //
-    //     // eslint-disable-next-line no-restricted-globals
-    //     history.push('/likert');
-    //
-    //     // return localStorageData;
-    // };
 
     useEffect(() => {
         const expandedNodes = JSON.parse(localStorage.getItem('expandedNodes'));
@@ -218,13 +188,9 @@ export default function FORMS() {
                     const elapsedTime = Math.floor(elapser/1000);
                     console.log(`Form ${nodeId} was open for ${elapsedTime} milliseconds`);
 
-                    // Retrieve existing elapsed time data from localStorage
+                    // Retrieve, Add, Store
                     const storedElapsedTime = JSON.parse(localStorage.getItem("elapsedTimes")) || [];
-
-                    // Add the current pair to the list of elapsed times
                     storedElapsedTime.push({ nodeId, elapsedTime });
-
-                    // Store the updated elapsed time data back into localStorage
                     localStorage.setItem("elapsedTimes", JSON.stringify(storedElapsedTime));
 
                     // Remove the start time entry from localStorage
@@ -235,48 +201,43 @@ export default function FORMS() {
     }, [formVisibility]);
 
 
-    // Effect to track when a form becomes visible and start a timer
-    // const startTimeRef = useRef(null);
-    // useEffect(() => {
-    //     if (timer) {
-    //         clearInterval(timer)
-    //     }
-    //     for (const nodeId in formVisibility) {
-    //         // when node is visible
-    //         if (formVisibility[nodeId]) {
-    //             console.log("Visible Form Node ID:", nodeId);
-    //             // Start and store
-    //             const startTime = Date.now(); // Record the start time when the tab is focused
-    //             startTimeRef.current = startTime; // Store the start time
-    //             const newTimer = setInterval(() => {
-    //                 const currentTime = Date.now();
-    //                 const elapsedTimeSeconds = Math.floor((currentTime - startTime) / 1000); // Calculate elapsed time in seconds
-    //                 setElapsedTimer(elapsedTimeSeconds);
-    //             }, 1000); // Update elapsed time every second
-    //             setTimer(newTimer);
-    //         } else {
-    //             // else means the form becomes hidden so now calculate time
-    //             // startTime
-    //             console.log(`Form ${nodeId} was open for ${elapsedTimer} seconds`);
-    //             // retrieve
-    //             const storedElapsedTime = JSON.parse(localStorage.getItem("elapsedTimes")) || [];
-    //             // insert
-    //             storedElapsedTime.push({ nodeId, elapsedTime });
-    //             // store
-    //             localStorage.setItem("elapsedTimes", JSON.stringify(storedElapsedTime));
-    //             // Remove the start time entry from localStorage
-    //             localStorage.removeItem(`startTime_${nodeId}`);
-    //         }
-    //     }
-    // }, [formVisibility]);
-
 
     const CustomLabel = ({ node }) => {
-        const [newNodeName, setNewNodeName] = React.useState();
+        const [newNodeName, setNewNodeName] = useState(localStorage.getItem('goalName') || '');
+        const [inputClicked, setInputClicked] = useState(localStorage.getItem("clicked") === "true"); // Parse string to boolean
+        const [lastFocusedInput, setLastFocusedInput] = useState(null); // State to keep track of the last focused input
+
+        const inputRef = useRef(null);
+
+        useEffect(() => {
+            if (inputClicked && inputRef.current) {
+                inputRef.current.focus();
+                // Update the last focused input when an input is clicked
+                setLastFocusedInput(inputRef.current);
+            }
+        }, [inputClicked]);
+
+        const handleInputClick = () => {
+            localStorage.setItem("clicked", "true");
+            setInputClicked(true);
+            // Update the last focused input when an input is clicked
+            setLastFocusedInput(inputRef.current);
+        };
+
+        const handleInputBlur = () => {
+            setInputClicked(false);
+            localStorage.setItem("clicked", "false");
+        };
 
         const handleNameChange = (event) => {
-            setNewNodeName(event.target.value);
+            const newName = event.target.value;
+            setNewNodeName(newName);
+            localStorage.setItem('goalName', newName);
         };
+
+        useEffect(() => {
+            localStorage.setItem('goalName', newNodeName);
+        }, [newNodeName]);
 
         const addNode = () => {
             let newNodeNameToUse = newNodeName || 'Objective ';
@@ -289,7 +250,7 @@ export default function FORMS() {
                 newNodeNameToUse = 'Intervention ';
             }
 
-            let newId = '';
+            let newId = "";
             if (newNodeNameToUse === 'Goal ') {
                 newId = `goal ${goalCounter}`;
                 setGoalCounter(goalCounter + 1);
@@ -297,14 +258,21 @@ export default function FORMS() {
             } else if (newNodeNameToUse === 'Objective ') {
                 newId = `objective ${objectiveCounter}`;
                 setObjectiveCounter(objectiveCounter + 1);
-                localStorage.setItem("objectivesCreated", 
+                localStorage.setItem("objectivesCreated",
                                     JSON.stringify(objectiveCounter+1));
             } else if (newNodeNameToUse === 'Intervention ') {
                 newId = `Intervention: ${interventionCounter}`;
                 setInterventionCounter(interventionCounter + 1);
-                localStorage.setItem("interventionsCreated", 
+                localStorage.setItem("interventionsCreated",
                                     JSON.stringify(interventionCounter+1));
+            } else {
+                newId = `goal ${goalCounter}`;
+                setGoalCounter(goalCounter + 1);
+                localStorage.setItem("goalsCreated", JSON.stringify(goalCounter+1));
             }
+
+            console.log(newNodeNameToUse)
+            console.log(newId)
 
             const newNode = {
                 id: newId,
@@ -321,6 +289,9 @@ export default function FORMS() {
             }
 
             setData(updatedDataWithNewNode);
+            localStorage.setItem("goalName", "");
+            localStorage.setItem("clicked", "false"); // Store as string
+            setInputClicked(false);
         };
 
         return (
@@ -330,9 +301,12 @@ export default function FORMS() {
                     <input
                         style={{ width: '50%' }}
                         type="text"
-                        placeholder="Goal"
-                        value={newNodeName}
+                        placeholder="Goal Name"
                         onChange={handleNameChange}
+                        value={newNodeName}
+                        ref={inputRef}
+                        onClick={handleInputClick}
+                        onBlur={handleInputBlur}
                     />
                 )}
                 {node.name !== 'Intervention ' && (
@@ -406,7 +380,7 @@ return (
             {renderTree(data)}
         </TreeView>
 
-        <p>{elapsedTime} sec</p>
+        {/*<p>{elapsedTime} sec</p>*/}
 
         <SubmitDataButton/>
     </Box>

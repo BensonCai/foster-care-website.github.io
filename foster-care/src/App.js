@@ -9,8 +9,9 @@ import narrative from "./Cases/Case 1/narrative";
 import Case1PDFS from "./Cases/Case 1/Case1PDFS";
 import likertScale from "./Cases/Case 1/likert";
 import Navigation from "./Cases/navigation";
-import case2PDFS from "./Cases/Case 2/case2PDFS";
-import case3PDFS from "./Cases/Case 3/case3PDFS";
+import Case2PDFS from "./Cases/Case 2/Case2PDFS";
+import Case3PDFS from "./Cases/Case 3/Case3PDFS";
+import Democase from "./Cases/Case 1/democase";
 
 class App extends React.Component {
     render() {
@@ -25,8 +26,9 @@ class App extends React.Component {
                         <Route exact path="/" render={() => <Redirect to="/home" />} />
                         <Route path="/home" component={Index} />
                         <Route path="/case1pdfs" component={Case1PDFS} />
-                        <Route path="/case2pdfs" component={case2PDFS} />
-                        <Route path="/case3pdfs" component={case3PDFS} />
+                        <Route path="/case2pdfs" component={Case2PDFS} />
+                        <Route path="/case3pdfs" component={Case3PDFS} />
+                        <Route path="/democase" component={Democase}/>
                         <Route path="/forms" component={FORMS} />
                         <Route path="/narrative" component={narrative} />
                         <Route path="/likert" component={likertScale} />

@@ -9,7 +9,7 @@ function Index() {
         if (!storedCase) {
             console.log("no key")
             try {
-                localStorage.setItem('case', '1');
+                localStorage.setItem('case', '0');
                 console.log("New 'case' key set in localStorage");
                 console.log('Result of setting item:', localStorage.getItem('case'));
                 window.location.reload();

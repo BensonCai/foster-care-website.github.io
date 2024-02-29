@@ -1,17 +1,20 @@
 import React from 'react';
 import Accordion from '../Accordion';
 import View from "../../view";
+import usePageTimer from "../pagetimer";
 
-export default function case3PDFS() {
+export default function Case2PDFS() {
+    const elapsedTime = usePageTimer('Referral Information2')
+
     const accordionItems = [
         {
-            title: 'Case 3 Youth Scale for DD',
+            title: 'Case 2 Youth Scale for DD',
             // title: 'Youth Connection Scale for DD',
             pdfUrl: 'https://drive.google.com/file/d/16r7uGATJwvzjfEiCua-krCP8P4YUEv7j/preview',
         },
         {
-            // title: 'PDF 2',
-            title: 'Youth Connection Scale Ages 15 - 21',
+            title: 'PDF 2',
+            // title: 'Youth Connection Scale Ages 15 - 21',
             pdfUrl: 'https://drive.google.com/file/d/1UGr1-EbdwH-Dnr7j8OSL7k7qG5BDY-ba/preview',
         },
         {
@@ -95,6 +98,7 @@ export default function case3PDFS() {
             <div className="maincontainer">
                 <Accordion items={accordionItems}></Accordion>
             </div>
+            <p>{elapsedTime} sec</p>
         </div>
     );
 }

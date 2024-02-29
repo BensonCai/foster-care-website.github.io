@@ -93,10 +93,11 @@ export default function Case1PDFS() {
         <div>
             {/*<h1>PDFs</h1>*/}
             {/* Comment Out Deploying*/}
+            {/*<div>Total Duration: {totalDuration} Seconds</div>*/}
+
             <div className="maincontainer">
                 <Accordion items={accordionItems}></Accordion>
             </div>
-            {/*<div>Total Duration: {totalDuration} Seconds</div>*/}
             <p>{elapsedTime} sec</p>
         </div>
     );

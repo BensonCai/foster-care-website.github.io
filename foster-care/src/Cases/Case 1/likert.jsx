@@ -42,22 +42,113 @@ export default function LikertScale() {
     };
 
     const handleSubmit = () => {
-        const storedCase = localStorage.getItem('case');
-        if (storedCase < 3) {
-            if (selectedValue_1) {
-                console.log("Likert chosen:", selectedValue_1);
-                console.log("Likert chosen:", selectedValue_2);
-                const stored = (parseInt(localStorage.getItem('case')) + 1).toString()
-                localStorage.setItem('case', stored);
-                history.push('/home');
-                window.location.reload();
-            } else {
-                console.log("Please select a value before submitting");
+        if (!selectedValue_1 || !selectedValue_2) {
+            alert("Please complete both Likert scales before submitting.");
+            return; // Exit early if either Likert scale is not completed
+        }
+
+        const localStorageData = {
+            selectedValue_1,
+            selectedValue_2
+        };
+
+        // Retrieve data from localStorage
+        for (let key in localStorage) {
+            if (
+                key.startsWith('goal') ||               // form data
+                key.startsWith('intervention') ||       // form data
+                key.startsWith('objective') ||          // form data
+                key === 'treeData' ||                   // tree data
+                key === 'expandedNodes' ||              // expanded nodes
+                key === 'totalTime' ||                  // time spent on pdfs
+                key === 'formTimeSpent' ||              // time spend on forms
+                key === 'narrativeInput' ||             // narrative data
+                key === 'elapsedTimes'
+            ) {
+                localStorageData[key] = localStorage.getItem(key);
             }
+        }
+
+        // send it to server when i a db to connect to
+
+        console.log(localStorageData)
+
+        // reset it for the next case
+        for (let key in localStorageData) {
+            localStorage.removeItem(key);
+        }
+
+        const storedCase = parseInt(localStorage.getItem('case'));
+        if (storedCase < 3) {
+            console.log("Likert chosen:", selectedValue_1);
+            console.log("Likert chosen:", selectedValue_2);
+            const stored = (storedCase + 1).toString()
+            localStorage.setItem('case', stored);
+            history.push('/home');
+            window.location.reload();
         } else {
             console.log("Likert chosen:", selectedValue_1);
             console.log("Likert chosen:", selectedValue_2);
-            const stored = (parseInt(localStorage.getItem('case')) + 1).toString()
+            const stored = (storedCase + 1).toString()
+            localStorage.setItem('case', stored);
+            history.push('/complete');
+            window.location.reload();
+        }
+    };
+
+    const downloadLocalStorageData = () => {
+        const localStorageData = {};
+
+        // Retrieve data from localStorage
+        for (let key in localStorage) {
+            if (
+                key.startsWith('goal') ||               // form data
+                key.startsWith('intervention') ||       // form data
+                key.startsWith('objective') ||          // form data
+                key === 'treeData' ||                   // tree data
+                key === 'expandedNodes' ||              // expanded nodes
+                key === 'totalTime' ||                  // time spent on pdfs
+                key === 'formTimeSpent' ||              // time spend on forms
+                key === 'narrativeInput' ||             // narrative data
+                key === 'elapsedTimes'
+            ) {
+                localStorageData[key] = localStorage.getItem(key);
+            }
+        }
+
+        // Convert data to a JSON string
+        const jsonData = JSON.stringify(localStorageData, null, 2);
+
+        // Create a Blob object containing the JSON data
+        const blob = new Blob([jsonData], { type: 'application/json' });
+
+        // Create a temporary anchor element to trigger the download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'localStorageData.json';
+
+        // Simulate a click on the anchor element to trigger the download
+        document.body.appendChild(a);
+        a.click();
+
+        // Cleanup
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+
+        const storedCase = parseInt(localStorage.getItem('case'));
+        if (storedCase < 3) {
+            console.log("Likert chosen:", selectedValue_1);
+            console.log("Likert chosen:", selectedValue_2);
+            const stored = (storedCase + 1).toString()
+            localStorage.setItem('case', stored);
+            history.push('/home');
+            window.location.reload();
+        } else {
+            console.log("Likert chosen:", selectedValue_1);
+            console.log("Likert chosen:", selectedValue_2);
+            const stored = (storedCase + 1).toString()
             localStorage.setItem('case', stored);
             history.push('/complete');
             window.location.reload();
@@ -68,7 +159,13 @@ export default function LikertScale() {
         <div>
             <Likert {...likertOptions_1} />
             <Likert {...likertOptions_2} />
-            <button onClick={handleSubmit}>Submit</button>
+            {parseInt(localStorage.getItem('case')) < 3 && (
+                <button className="submission" onClick={handleSubmit}>Submit</button>
+            )}
+            {parseInt(localStorage.getItem('case')) === 3 && (
+                <button className="submission" onClick={downloadLocalStorageData}>Download LocalStorage Data</button>
+            )}
         </div>
+    //     You can click download localstorage data without having likert scale selected
     );
 }
