@@ -8,78 +8,33 @@ export default function Case2PDFS() {
 
     const accordionItems = [
         {
-            title: 'Case 2 Youth Scale for DD',
-            // title: 'Youth Connection Scale for DD',
-            pdfUrl: 'https://drive.google.com/file/d/16r7uGATJwvzjfEiCua-krCP8P4YUEv7j/preview',
+            title: 'YCS',
+            // title: 'Youth Connection Scale',
+            pdfUrl: 'https://buffalo.box.com/s/fyq5fcmhu13z4hsnulyow2vze4tx9kmf',
         },
         {
-            title: 'PDF 2',
-            // title: 'Youth Connection Scale Ages 15 - 21',
-            pdfUrl: 'https://drive.google.com/file/d/1UGr1-EbdwH-Dnr7j8OSL7k7qG5BDY-ba/preview',
-        },
-        {
-            title: 'PDF 3',
-            // title: 'Youth Connection Scale Ages 9 - 14',
-            pdfUrl: 'https://drive.google.com/file/d/1gVuLh8t6Uz7LsseRXH54La5tdFgGIa15/preview',
-        },
-        {
-            title: 'PDF 4',
-            // title:'UCLA PTSD Reaction Index',
-            pdfUrl: 'https://drive.google.com/file/d/1E-YnQaxh_3nskDDgeaIj33FpOXT3hmTM/preview',
-        },
-        {
-            title: 'PDF 5',
-            // title: 'Suicide Risk Assessment',
-            pdfUrl: 'https://drive.google.com/file/d/1XYzBrTgZPfiRYptUNQo1U9_Lp0i-bq3V/preview',
-        },
-        {
-            title: 'PDF 6',
-            // title: 'HSA-1101-1103',
-            pdfUrl: 'https://drive.google.com/file/d/1mLlxYzLAZ2HozgwbRg4KmclxyggZ8Igo/preview',
-        },
-        {
-            title: 'PDF 7',
+            title: 'HCRS',
             // title: 'Hillside Clinical Risk Screen',
-            pdfUrl: 'https://drive.google.com/file/d/1Ophg8Yf3xtB4EhkZs1q08-XvbEv0Vl5s/preview',
+            pdfUrl: 'https://buffalo.box.com/s/wtwbeziq3yyencj5ayialh74ywx92qs1',
         },
         {
-            title: 'DAP Ages 9 to 11',
-            pdfUrl: 'https://drive.google.com/file/d/170eE3Ipksg6qOGGU3z449JlyvAn8OyjV/preview',
+            title: 'DAP',
+            pdfUrl: 'https://buffalo.box.com/s/ci8rw04c1prmq1ujunf7y9tqsqjjizuk',
         },
         {
-            // title: 'PDF 9',
-            title: 'DAP Ages 11 to 18',
-            pdfUrl: 'https://drive.google.com/file/d/1UaTOqWbs4ebuHvHQWCG-Uv-SKg5azMcD/preview',
-        },
-        {
-            // title: 'PDF 10',
-            title: 'CANS Ages 6 to 21',
-            pdfUrl: 'https://drive.google.com/file/d/1mMyw8TQkJ_45olINs7NOkgcdLvjgS2_L/preview',
-        },
-        {
-            // title: 'PDF 11',
-            title: 'CANS Ages 0 to 5',
-            pdfUrl: 'https://drive.google.com/file/d/1IlElfTsB7OeTkelsiYkhaOAod_A_8zNP/preview',
+            // title: 'CANS',
+            title: 'CANS',
+            pdfUrl: 'https://buffalo.box.com/s/ake6oy7pcsntecd9p9w1btriiovi3oge',
         },
         {
             // title: 'PDF 12',
             title: 'Biopsychosocial V2',
-            pdfUrl: 'https://drive.google.com/file/d/10OmhtMjfhusSBIEz7Q4CdgJM12TEaGjO/preview',
+            pdfUrl: 'https://buffalo.box.com/s/ttb436bawnxtekf0iczyc6gmxgatlxdb',
         },
         {
             // title: 'PDF 13',
-            title: 'ACE Calculator',
-            pdfUrl: 'https://drive.google.com/file/d/1smFjufnQzwzQ6scs7dyAKV6bE48xkETs/preview',
-        },
-        {
-            // title: 'PDF 14',
-            title: 'ACE-Teen Self-Report',
-            pdfUrl: 'https://drive.google.com/file/d/11j8CiBpc8bAlqs8W8yDaNfYcthj3qMGo/preview',
-        },
-        {
-            // title: 'PDF 15',
-            title: 'ACE-Child',
-            pdfUrl: 'https://drive.google.com/file/d/1AnVFhVt3jeqpwL9IrdyaWX1xhwv9LIiB/preview',
+            title: 'ACE',
+            pdfUrl: 'https://buffalo.box.com/s/zl231zmy1f1jamd2kelukd9q0qfhq9b9',
         },
     ];
 
