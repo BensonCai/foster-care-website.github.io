@@ -74,7 +74,7 @@ export default function Narrative() {
                 placeholder="Enter your text"
                 className="narrativeInput"
             />
-            <p>Elapsed: {elapsedTime} sec</p>
+            {/*<p>Elapsed: {elapsedTime} sec</p>*/}
 
             {/*<button onClick={handleSave}>Save</button>*/}
             <SubmitDataButton/>

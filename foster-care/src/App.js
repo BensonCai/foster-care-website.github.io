@@ -1,7 +1,7 @@
 import React from 'react';
 import "./nav.css";
 import "./App.css";
-import { HashRouter, Link, Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Index from "./Cases/Case 1";
 import FORMS from './Cases/Case 1/forms';
 import complete from "./Cases/complete";

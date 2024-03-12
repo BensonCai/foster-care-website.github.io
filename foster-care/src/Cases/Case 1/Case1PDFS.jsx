@@ -98,7 +98,7 @@ export default function Case1PDFS() {
             <div className="maincontainer">
                 <Accordion items={accordionItems}></Accordion>
             </div>
-            <p>{elapsedTime} sec</p>
+            {/*<p>{elapsedTime} sec</p>*/}
         </div>
     );
 }

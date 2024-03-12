@@ -8,6 +8,8 @@ export default function LikertScale() {
 
     const [selectedValue_1, setSelectedValue_1] = useState(null);
     const [selectedValue_2, setSelectedValue_2] = useState(null);
+    const [likertCompleted, setLikertCompleted] = useState(false); // Track if both Likert options are selected
+
 
     const likertOptions_1 = {
         id: "likert_1",
@@ -41,6 +43,7 @@ export default function LikertScale() {
         className: "noMarginRight"
     };
 
+
     const handleSubmit = () => {
         if (!selectedValue_1 || !selectedValue_2) {
             alert("Please complete both Likert scales before submitting.");
@@ -72,13 +75,14 @@ export default function LikertScale() {
         // send it to server when i a db to connect to
 
         console.log(localStorageData)
+        const storedCase = parseInt(localStorage.getItem('case'));
+        localStorage.setItem(`submissioncase${storedCase}`, JSON.stringify(localStorageData));
 
         // reset it for the next case
         for (let key in localStorageData) {
             localStorage.removeItem(key);
         }
 
-        const storedCase = parseInt(localStorage.getItem('case'));
         if (storedCase < 3) {
             console.log("Likert chosen:", selectedValue_1);
             console.log("Likert chosen:", selectedValue_2);
@@ -86,20 +90,23 @@ export default function LikertScale() {
             localStorage.setItem('case', stored);
             history.push('/home');
             window.location.reload();
-        } else {
-            console.log("Likert chosen:", selectedValue_1);
-            console.log("Likert chosen:", selectedValue_2);
-            const stored = (storedCase + 1).toString()
-            localStorage.setItem('case', stored);
-            history.push('/complete');
-            window.location.reload();
         }
     };
 
     const downloadLocalStorageData = () => {
-        const localStorageData = {};
+        //TODO hot fix: I need to fetch the localstorage Keys that
+        // start with submission not whats below currently
 
-        // Retrieve data from localStorage
+        if (!selectedValue_1 || !selectedValue_2) {
+            alert("Please complete both Likert scales before submitting.");
+            return; // Exit early if either Likert scale is not completed
+        }
+
+        const localStorageData = {
+            selectedValue_1,
+            selectedValue_2
+        };
+
         for (let key in localStorage) {
             if (
                 key.startsWith('goal') ||               // form data
@@ -116,8 +123,21 @@ export default function LikertScale() {
             }
         }
 
+        const storedCase = parseInt(localStorage.getItem('case'));
+        localStorage.setItem(`submissioncase${storedCase}`, JSON.stringify(localStorageData));
+
+        const returnVal = {};
+        // Retrieve data from localStorage
+        for (let key in localStorage) {
+            if (key.startsWith('submission')){         // form data) {
+                returnVal[key] = localStorage.getItem(key);
+            } else {
+                localStorage.removeItem(key)
+            }
+        }
+
         // Convert data to a JSON string
-        const jsonData = JSON.stringify(localStorageData, null, 2);
+        const jsonData = JSON.stringify(returnVal, null, 2);
 
         // Create a Blob object containing the JSON data
         const blob = new Blob([jsonData], { type: 'application/json' });
@@ -136,36 +156,24 @@ export default function LikertScale() {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
 
+        const stored = (storedCase + 1).toString()
+        localStorage.setItem('case', stored);
+        history.push('/complete')
+        window.location.reload()
 
-        const storedCase = parseInt(localStorage.getItem('case'));
-        if (storedCase < 3) {
-            console.log("Likert chosen:", selectedValue_1);
-            console.log("Likert chosen:", selectedValue_2);
-            const stored = (storedCase + 1).toString()
-            localStorage.setItem('case', stored);
-            history.push('/home');
-            window.location.reload();
-        } else {
-            console.log("Likert chosen:", selectedValue_1);
-            console.log("Likert chosen:", selectedValue_2);
-            const stored = (storedCase + 1).toString()
-            localStorage.setItem('case', stored);
-            history.push('/complete');
-            window.location.reload();
-        }
     };
 
     return (
         <div>
             <Likert {...likertOptions_1} />
             <Likert {...likertOptions_2} />
-            {parseInt(localStorage.getItem('case')) < 3 && (
+            {parseInt(localStorage.getItem('case')) <= 3 && (
                 <button className="submission" onClick={handleSubmit}>Submit</button>
             )}
             {parseInt(localStorage.getItem('case')) === 3 && (
                 <button className="submission" onClick={downloadLocalStorageData}>Download LocalStorage Data</button>
             )}
         </div>
-    //     You can click download localstorage data without having likert scale selected
+    //     You can click download localstorage data without having likert scale
     );
 }

@@ -29,7 +29,7 @@ function Index() {
                 including a clinical summary/narrative, goals, objectives, and interventions. Your progress through the site will be collected for study purposes.
                 As you go through this process, please continually verbalize your thought process as explained during the introduction.
             </h5>
-            <p>{elapsedTime} sec</p>
+            {/*<p>{elapsedTime} sec</p>*/}
         </div>
     );
 }
