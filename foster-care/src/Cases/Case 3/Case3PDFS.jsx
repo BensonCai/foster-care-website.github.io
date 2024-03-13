@@ -14,7 +14,7 @@ export default function Case3PDFS() {
             pdfUrl: 'https://buffalo.box.com/s/twm85xow2uj6p20aqjumh9eqo4nobt6a',
         },
         {
-            title: 'PDF 7',
+            title: 'HCRS',
             // title: 'Hillside Clinical Risk Screen',
             pdfUrl: 'https://buffalo.box.com/s/8csfii3pjp3b5bc92xk2yggzhi054qb2',
         },
